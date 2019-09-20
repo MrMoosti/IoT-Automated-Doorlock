@@ -1,19 +1,25 @@
 ﻿using System;
 using System.Device.Spi;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using System.Net.Http.Headers;
 
 
 namespace IoT.Program
 {
     class Program
     {
+        static HttpClient client = new HttpClient();
+
         static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello Mfrc522!");
+            client.BaseAddress = new Uri("https://localhost:5001/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
 
-            // This sample demonstrates how to read a RFID tag
-            // using the Mfrc522Controller
+            Console.WriteLine("Hello Mfrc522!");
 
             var connection = new SpiConnectionSettings(0, 0);
             connection.ClockFrequency = 500000;
@@ -27,6 +33,18 @@ namespace IoT.Program
             }
 
             //await Task.CompletedTask;
+        }
+
+        static async Task<Uri> PostUid(byte[] uid)
+        {
+            HttpResponseMessage response = await client.PostAsJsonAsync(
+                "api/rfid/check", uid);
+            response.EnsureSuccessStatusCode();
+
+            Console.WriteLine("UID Sent");
+
+            // return URI of the created resource.
+            return response.Headers.Location;
         }
 
         private static void ReadCardAuth(Mfrc522Controller mfrc522Controller)
@@ -98,7 +116,9 @@ namespace IoT.Program
                     continue;
 
                 var (status2, uid) = mfrc522Controller.AntiCollision();
-                Console.WriteLine(string.Join(", ", uid));
+
+                await PostUid(uid);
+                //Console.WriteLine(string.Join(", ", uid));
 
                 await Task.Delay(500);
             }

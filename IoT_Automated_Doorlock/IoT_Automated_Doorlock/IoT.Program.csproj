@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="System.Device.Gpio" Version="1.0.0-prerelease.19413.1" />
     <PackageReference Include="Iot.Device.Bindings" Version="1.0.0-prerelease.19413.1" />
   </ItemGroup>
