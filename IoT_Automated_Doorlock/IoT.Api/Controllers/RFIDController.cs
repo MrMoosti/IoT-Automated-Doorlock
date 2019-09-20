@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using IoT.Program;
+using System.Device.Spi;
 
 namespace IoT.Api.Controllers
 {
@@ -11,6 +12,14 @@ namespace IoT.Api.Controllers
     [ApiController]
     public class RFIDController : ControllerBase
     {
+
+        public RFIDController()
+        {
+            var connection = new SpiConnectionSettings(0, 0);
+            connection.ClockFrequency = 500000;
+
+            var spi = SpiDevice.Create(connection);
+        }
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
@@ -25,10 +34,20 @@ namespace IoT.Api.Controllers
             return "value";
         }
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
+        private static async Task CardRead(Mfrc522Controller mfrc522Controller)
         {
+            while (true)
+            {
+                var (status, _) = mfrc522Controller.Request(RequestMode.RequestIdle);
+
+                if (status != Status.OK)
+                    continue;
+
+                var (status2, uid) = mfrc522Controller.AntiCollision();
+                Console.WriteLine(string.Join(", ", uid));
+
+                await Task.Delay(500);
+            }
         }
 
         // PUT api/values/5

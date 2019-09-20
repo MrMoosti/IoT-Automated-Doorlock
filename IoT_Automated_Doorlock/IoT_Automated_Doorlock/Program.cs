@@ -2,7 +2,7 @@
 using System.Device.Spi;
 using System.Linq;
 using System.Threading.Tasks;
-using Iot.Program;
+
 
 namespace IoT.Program
 {

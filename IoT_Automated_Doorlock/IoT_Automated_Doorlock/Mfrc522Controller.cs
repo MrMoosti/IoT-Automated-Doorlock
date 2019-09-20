@@ -5,7 +5,7 @@ using System.Device.Spi;
 using System.Diagnostics;
 using IoT.Program;
 
-namespace Iot.Program
+namespace IoT.Program
 {
     using static Command;
     using static Register;
