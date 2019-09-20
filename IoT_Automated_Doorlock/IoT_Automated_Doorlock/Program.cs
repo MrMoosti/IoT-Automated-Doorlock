@@ -5,6 +5,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using System.Security.Authentication;
 
 namespace IoT.Program
 {
@@ -14,17 +16,13 @@ namespace IoT.Program
 
         static async Task Main(string[] args)
         {
+            var handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            client = new HttpClient(handler);
             client.BaseAddress = new Uri("https://localhost:5001/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
-            System.Net.ServicePointManager.ServerCertificateValidationCallback +=
-            delegate (object sender, System.Security.Cryptography.X509Certificates.X509Certificate certificate,
-                                    System.Security.Cryptography.X509Certificates.X509Chain chain,
-                                    System.Net.Security.SslPolicyErrors sslPolicyErrors)
-            {
-                return true; // **** Always accept
-            };
 
             Console.WriteLine("Hello Mfrc522!");
 
@@ -40,15 +38,16 @@ namespace IoT.Program
             }
 
             //await Task.CompletedTask;
+
         }
 
-        static async Task<Uri> PostUid()
+        static async Task<Uri> PostUid(byte[] uid)
         {
             HttpResponseMessage response = await client.PostAsJsonAsync(
-                "api/RFID/test", "");
+                "api/RFID/test", uid);
             response.EnsureSuccessStatusCode();
 
-            Console.WriteLine("UID Sent");
+            Console.WriteLine(await response.Content.ReadAsStringAsync());
 
             // return URI of the created resource.
             return response.Headers.Location;
@@ -125,7 +124,7 @@ namespace IoT.Program
                 var (status2, uid) = mfrc522Controller.AntiCollision();
 
                 Console.WriteLine("Listening");
-                await PostUid();
+                await PostUid(uid);
                 //Console.WriteLine(string.Join(", ", uid));
 
                 await Task.Delay(500);
