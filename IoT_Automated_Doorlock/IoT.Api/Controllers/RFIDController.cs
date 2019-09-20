@@ -10,12 +10,20 @@ namespace IoT.Api.Controllers
     [ApiController]
     public class RFIDController : ControllerBase
     {
-        [HttpPost("check")]
+        /*[HttpPost("check")]
         public async Task<ActionResult<byte[]>> Check([FromBody]byte[] uid)
         {
             string s_uid = string.Join(", ", uid);
 
             return Ok(s_uid);
+        }*/
+
+        [HttpPost("test")]
+        public ActionResult Test()
+        {
+            string uid = "hi";
+
+            return Ok(uid);
         }
     }
 }

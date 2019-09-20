@@ -18,7 +18,13 @@ namespace IoT.Program
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
-            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+            System.Net.ServicePointManager.ServerCertificateValidationCallback +=
+            delegate (object sender, System.Security.Cryptography.X509Certificates.X509Certificate certificate,
+                                    System.Security.Cryptography.X509Certificates.X509Chain chain,
+                                    System.Net.Security.SslPolicyErrors sslPolicyErrors)
+            {
+                return true; // **** Always accept
+            };
 
             Console.WriteLine("Hello Mfrc522!");
 
@@ -36,10 +42,10 @@ namespace IoT.Program
             //await Task.CompletedTask;
         }
 
-        static async Task<Uri> PostUid(byte[] uid)
+        static async Task<Uri> PostUid()
         {
             HttpResponseMessage response = await client.PostAsJsonAsync(
-                "api/rfid/check", uid);
+                "api/RFID/test", "");
             response.EnsureSuccessStatusCode();
 
             Console.WriteLine("UID Sent");
@@ -118,7 +124,8 @@ namespace IoT.Program
 
                 var (status2, uid) = mfrc522Controller.AntiCollision();
 
-                await PostUid(uid);
+                Console.WriteLine("Listening");
+                await PostUid();
                 //Console.WriteLine(string.Join(", ", uid));
 
                 await Task.Delay(500);
