@@ -41,7 +41,12 @@ namespace IoT.Api
                 app.UseHsts();
             }
 
+            app.UseCors(builder => builder.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowAnyOrigin());
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseMvc();
         }
     }
