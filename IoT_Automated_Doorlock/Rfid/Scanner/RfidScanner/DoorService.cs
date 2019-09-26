@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MongoDB.Bson;
@@ -11,17 +12,18 @@ using Swan;
 using Swan.Logging;
 using Unosquare.RaspberryIO;
 using Unosquare.RaspberryIO.Peripherals;
+using Unosquare.WiringPi;
 
 namespace RfidScanner
 {
 
-    public class UserService
+    public class DoorService
     {
 
         private readonly IUnitOfWork _unitOfWork;
 
 
-        public UserService(IUnitOfWork unitOfWork)
+        public DoorService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -31,7 +33,7 @@ namespace RfidScanner
         {
             Console.Clear();
             var exit = false;
-            var mainOption = Terminal.ReadPrompt("Do you want to create a new user?",
+            var mainOption = Terminal.ReadPrompt("Do you want to Test?",
                                                  new Dictionary<ConsoleKey, string>
                                                  {
                                                      {ConsoleKey.Y, "Yes"},
@@ -43,7 +45,7 @@ namespace RfidScanner
                 switch (mainOption.Key)
                 {
                     case ConsoleKey.Y:
-                        await NewUser().ConfigureAwait(false);
+                        await checkDoor().ConfigureAwait(false);
                         return;
                     case ConsoleKey.N:
                         return;
@@ -56,10 +58,19 @@ namespace RfidScanner
         }
 
 
-        private async Task NewUser()
+        private async Task checkDoor()
         {
             var device = new RFIDControllerMfrc522(Pi.Spi.Channel0, 500000, Pi.Gpio[22]);
             "Place the card on the sensor".Info();
+
+            var redLed = Pi.Gpio[Unosquare.RaspberryIO.Abstractions.BcmPin.Gpio18];
+            var greenLed = Pi.Gpio[Unosquare.RaspberryIO.Abstractions.BcmPin.Gpio12];
+
+            redLed.PinMode = Unosquare.RaspberryIO.Abstractions.GpioPinDriveMode.Output;
+            greenLed.PinMode = Unosquare.RaspberryIO.Abstractions.GpioPinDriveMode.Output;
+
+            greenLed.Write(true);
+            redLed.Write(true);
 
             while (true)
             {
@@ -84,13 +95,33 @@ namespace RfidScanner
                     var data = device.CardReadData(16);
                     var text = Encoding.ASCII.GetString(data.Data);
 
-                    await _unitOfWork.Logs.AddAsync(new Log
+                    byte[] secretPass = Encoding.ASCII.GetBytes("HelloHelloHellos");
+
+                    text.Info();
+
+                    if (data.Data.SequenceEqual(secretPass))
                     {
-                        Uid = cardUid,
-                        AttemptType = AttemptType.Success,
-                        Message = $"User with Uid {cardUid} has granted access."
-                    }).ConfigureAwait(false);
-                    "Created and saved new log".Info();
+                        "Access granted!".Info();
+                        greenLed.Write(false);
+                        System.Threading.Thread.Sleep(3000);
+                    }
+                    else
+                    {
+                        "Access denied!".Info();
+                        redLed.Write(false);
+                        System.Threading.Thread.Sleep(3000);
+                    }
+
+                    greenLed.Write(true);
+                    redLed.Write(true);
+
+                    /* await _unitOfWork.Logs.AddAsync(new Log
+                     {
+                         Uid = cardUid,
+                         AttemptType = AttemptType.Success,
+                         Message = $"User with Uid {cardUid} has granted access."
+                     }).ConfigureAwait(false);*/
+                    /*"Created and saved new log".Info();*/
                 }
                 device.ClearCardSelection();
                 break;
