@@ -45,8 +45,9 @@ namespace RfidScanner
                 switch (mainOption.Key)
                 {
                     case ConsoleKey.Y:
-                        await checkDoor().ConfigureAwait(false);
-                        return;
+                        //await checkDoor().ConfigureAwait(false);
+                        await DoorInput().ConfigureAwait(false)
+;                        return;
                     case ConsoleKey.N:
                         return;
                     case ConsoleKey.Escape:
@@ -55,6 +56,18 @@ namespace RfidScanner
                 }
             } while (!exit);
 
+        }
+
+        public async Task DoorInput() {
+            var button = Pi.Gpio[Unosquare.RaspberryIO.Abstractions.BcmPin.Gpio11];
+            "Testing button".Info();
+                button.PinMode = Unosquare.RaspberryIO.Abstractions.GpioPinDriveMode.Input;
+
+            while(true) {
+                Console.WriteLine(button.Read());
+                System.Threading.Thread.Sleep(1000);
+            }
+            ContinueHelper.AskToContinue();
         }
 
 
