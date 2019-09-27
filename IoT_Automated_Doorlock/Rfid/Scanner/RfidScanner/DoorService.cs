@@ -4,15 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MongoDB.Bson;
-using Rfid.Persistence.Domain.Collections;
-using Rfid.Persistence.Domain.Enums;
 using Rfid.Persistence.UnitOfWorks;
 using RfidScanner.Helper;
 using Swan;
 using Swan.Logging;
 using Unosquare.RaspberryIO;
 using Unosquare.RaspberryIO.Peripherals;
-using Unosquare.WiringPi;
 
 namespace RfidScanner
 {
@@ -46,8 +43,8 @@ namespace RfidScanner
                 {
                     case ConsoleKey.Y:
                         //await checkDoor().ConfigureAwait(false);
-                        await DoorInput().ConfigureAwait(false)
-;                        return;
+                        DoorInput();
+;                       return;
                     case ConsoleKey.N:
                         return;
                     case ConsoleKey.Escape:
@@ -58,16 +55,28 @@ namespace RfidScanner
 
         }
 
-        public async Task DoorInput() {
-            var button = Pi.Gpio[Unosquare.RaspberryIO.Abstractions.BcmPin.Gpio11];
-            "Testing button".Info();
-                button.PinMode = Unosquare.RaspberryIO.Abstractions.GpioPinDriveMode.Input;
+        public void DoorInput() {
+            "Testing Button".Info();
 
-            while(true) {
-                Console.WriteLine(button.Read());
-                System.Threading.Thread.Sleep(1000);
+            var inputPin = Pi.Gpio[Unosquare.RaspberryIO.Abstractions.BcmPin.Gpio17];
+            var button = new Button(inputPin, Unosquare.RaspberryIO.Abstractions.GpioPinResistorPullMode.PullUp);
+
+            button.Pressed += (s, e) => LogMessageOnEvent("Pressed");
+            button.Released += (s, e) => LogMessageOnEvent("Released");
+
+            while (true)
+            {
+                var input = Console.ReadKey(true).Key;
+                if (input != ConsoleKey.Escape) continue;
+
+                break;
             }
-            ContinueHelper.AskToContinue();
+        }
+
+        private static void LogMessageOnEvent(string message)
+        {
+            Console.Clear();
+            message.Info();
         }
 
 
