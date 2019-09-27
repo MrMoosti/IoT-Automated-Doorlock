@@ -68,13 +68,13 @@ namespace RfidScanner
                         // Card with access
                         "Door unlocked!".Info();
                         //ControlLed.TurnOfLeds(leds);
-                        ControlLed.BlinkLed(Pi.Gpio[BcmPin.Gpio12], 3000);
+                        ControlLed.BlinkLed(Pi.Gpio[BcmPin.Gpio22], 3000);
 
-                        await _unitOfWork.Logs.AddAsync(new Log
+                        /*await _unitOfWork.Logs.AddAsync(new Log
                         {
                             AttemptType = AttemptType.Success,
                             Message = "Door has been successfully unlocked."
-                        }).ConfigureAwait(false);
+                        }).ConfigureAwait(false);*/
                         // Wait until button is pressed to continue
                     }
                     else
@@ -82,12 +82,12 @@ namespace RfidScanner
                         // Card without access
                         "Access denied!".Info();
                         //ControlLed.TurnOfLeds(leds);
-                        ControlLed.BlinkLed(Pi.Gpio[BcmPin.Gpio18], 3000);
-                        await _unitOfWork.Logs.AddAsync(new Log
+                        ControlLed.BlinkLed(Pi.Gpio[BcmPin.Gpio21], 3000);
+                        /*await _unitOfWork.Logs.AddAsync(new Log
                         {
                             AttemptType = AttemptType.Fail,
                             Message = "Card does not have permission to unlock door!"
-                        }).ConfigureAwait(false);
+                        }).ConfigureAwait(false);*/
                         // Continue allow reading
                     }
 

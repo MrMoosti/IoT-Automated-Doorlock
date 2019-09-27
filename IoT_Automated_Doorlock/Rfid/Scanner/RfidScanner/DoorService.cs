@@ -42,10 +42,10 @@ namespace RfidScanner
                 switch (mainOption.Key)
                 {
                     case ConsoleKey.Y:
-                        //await checkDoor().ConfigureAwait(false);
-                        DoorInput();
+                        await checkDoor().ConfigureAwait(false);
 ;                       return;
                     case ConsoleKey.N:
+                        DoorInput();
                         return;
                     case ConsoleKey.Escape:
                         exit = true;
