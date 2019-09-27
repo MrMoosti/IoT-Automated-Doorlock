@@ -18,9 +18,8 @@ namespace RfidScanner
     {
         private static readonly Dictionary<ConsoleKey, string> StartOptions = new Dictionary<ConsoleKey, string>
                                                                              {
-                                                                                 { ConsoleKey.L, "Door Access" },
                                                                                  { ConsoleKey.M, "RFID Menu" },
-                                                                                 { ConsoleKey.X, "Log Test"},
+                                                                                 { ConsoleKey.X, "Program" }
                                                                              };
 
 
@@ -44,7 +43,8 @@ namespace RfidScanner
                         Unity.Resolve<RfidMenu>().Show();
                         break;
                     case ConsoleKey.X:
-                        await Unity.Resolve<DoorService>().Initialize().ConfigureAwait(false);
+                        await Unity.Resolve<Scanner>().Initialize().ConfigureAwait(false);
+                        //await Unity.Resolve<DoorService>().Initialize().ConfigureAwait(false);
                         break;
                     case ConsoleKey.Escape:
                         exit = true;
