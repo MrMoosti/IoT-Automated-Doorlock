@@ -36,12 +36,11 @@ namespace RfidScanner
 
             var device = new RFIDControllerMfrc522(Pi.Spi.Channel0, 500000, Pi.Gpio[22]);
 
-/*            IGpioPin[] leds =
-                            {
-                                Pi.Gpio[BcmPin.Gpio18],
-                                Pi.Gpio[BcmPin.Gpio12]
-                            };
-*/
+            var redLed = Pi.Gpio[BcmPin.Gpio18];
+            var greenLed = Pi.Gpio[BcmPin.Gpio22];
+
+            redLed.PinMode = GpioPinDriveMode.Output;
+            greenLed.PinMode = GpioPinDriveMode.Output;
 
             while (true)
             {
@@ -68,13 +67,13 @@ namespace RfidScanner
                         // Card with access
                         "Door unlocked!".Info();
                         //ControlLed.TurnOfLeds(leds);
-                        ControlLed.BlinkLed(Pi.Gpio[BcmPin.Gpio22], 3000);
+                        ControlLed.BlinkLed(greenLed, 3000);
 
-                        /*await _unitOfWork.Logs.AddAsync(new Log
+                        await _unitOfWork.Logs.AddAsync(new Log
                         {
                             AttemptType = AttemptType.Success,
                             Message = "Door has been successfully unlocked."
-                        }).ConfigureAwait(false);*/
+                        }).ConfigureAwait(false);
                         // Wait until button is pressed to continue
                     }
                     else
@@ -82,12 +81,12 @@ namespace RfidScanner
                         // Card without access
                         "Access denied!".Info();
                         //ControlLed.TurnOfLeds(leds);
-                        ControlLed.BlinkLed(Pi.Gpio[BcmPin.Gpio21], 3000);
-                        /*await _unitOfWork.Logs.AddAsync(new Log
+                        ControlLed.BlinkLed(redLed, 3000);
+                        await _unitOfWork.Logs.AddAsync(new Log
                         {
                             AttemptType = AttemptType.Fail,
                             Message = "Card does not have permission to unlock door!"
-                        }).ConfigureAwait(false);*/
+                        }).ConfigureAwait(false);
                         // Continue allow reading
                     }
 

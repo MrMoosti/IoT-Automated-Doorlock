@@ -21,16 +21,5 @@ namespace RfidScanner.Helpers
                 }
             });
         }
-
-        public static void TurnOfLeds(IGpioPin[] leds)
-        {
-            Task.Run(async () =>
-            {
-                foreach (var led in leds)
-                {
-                    led.Write(GpioPinValue.High);
-                }
-            });
-        }
     }
 }

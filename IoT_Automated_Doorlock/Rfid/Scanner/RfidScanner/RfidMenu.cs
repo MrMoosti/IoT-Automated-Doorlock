@@ -60,7 +60,7 @@ namespace RfidScanner
         {
             Console.Clear();
             "Testing RFID".Info();
-            var device = new RFIDControllerMfrc522(Pi.Spi.Channel0, 500000, Pi.Gpio[18]);
+            var device = new RFIDControllerMfrc522(Pi.Spi.Channel0, 500000, Pi.Gpio[22]);
 
             while (true)
             {
@@ -98,7 +98,7 @@ namespace RfidScanner
             Console.Clear();
             "Testing RFID".Info();
 
-            var device = new RFIDControllerMfrc522(Pi.Spi.Channel0, 500000, Pi.Gpio[18]);
+            var device = new RFIDControllerMfrc522(Pi.Spi.Channel0, 500000, Pi.Gpio[22]);
             var userInput = Terminal.ReadLine("Insert a message to be written in the card (16 characters only)").Truncate(16);
             "Place the card on the sensor".Info();
 
