@@ -30,6 +30,7 @@ namespace RfidScanner
             button = new Button(Pi.Gpio[BcmPin.Gpio17], GpioPinResistorPullMode.PullUp);
 
             button.Pressed += (s, e) => ContinueReading();
+
         }
 
         public Task Initialize()
@@ -82,9 +83,12 @@ namespace RfidScanner
 
                         await _unitOfWork.Logs.AddAsync(new Log
                         {
+                            Uid = uid,
                             AttemptType = AttemptType.Success,
                             Message = "Door has been successfully unlocked."
                         }).ConfigureAwait(false);
+
+                        await _doorService.UpdateDoorStateAsync(DoorStatus.Open);
 
                         access = true;
                         //Wait until button is pressed.
@@ -93,7 +97,10 @@ namespace RfidScanner
                             System.Threading.Thread.Sleep(500);
                         }
                         readAgain = false;
+
                         ControlLed.BlinkLed(Pi.Gpio[BcmPin.Gpio22], 0);
+
+                        await _doorService.UpdateDoorStateAsync(DoorStatus.Closed);
 
                     }
                     else

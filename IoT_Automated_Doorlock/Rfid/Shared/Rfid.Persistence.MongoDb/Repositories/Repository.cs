@@ -21,7 +21,6 @@ namespace Rfid.Persistence.MongoDb.Repositories
             _mongoCollection = context.GetCollection<T>(collectionName);
         }
 
-
         /// <inheritdoc />
         public Task<T> FindAsync(Expression<Func<T, bool>> predicate)
         {

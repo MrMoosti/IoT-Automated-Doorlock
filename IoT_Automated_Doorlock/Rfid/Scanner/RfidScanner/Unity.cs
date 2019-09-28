@@ -55,6 +55,7 @@ namespace RfidScanner
             container.RegisterType<IUnitOfWork, UnitOfWork>(new PerResolveLifetimeManager());
             container.RegisterType<IUserRepository, UserRepository>(new PerResolveLifetimeManager());
             container.RegisterType<ILogRepository, LogRepository>(new PerResolveLifetimeManager());
+            container.RegisterType<IDoorRepository, DoorRepository>(new PerResolveLifetimeManager());
 
             #endregion
         }
