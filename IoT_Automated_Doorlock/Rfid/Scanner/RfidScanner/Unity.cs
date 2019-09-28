@@ -45,7 +45,6 @@ namespace RfidScanner
 
             container.RegisterType<ILogger, Logger>(new PerResolveLifetimeManager());
             container.RegisterSingleton<RfidMenu>();
-            /*container.RegisterSingleton<CreateUserService>();*/
             container.RegisterSingleton<Scanner>();
 
 

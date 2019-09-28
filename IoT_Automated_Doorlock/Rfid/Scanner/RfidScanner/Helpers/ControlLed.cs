@@ -10,6 +10,7 @@ namespace RfidScanner.Helpers
     {
         public static void BlinkLed(IGpioPin led, int blinkTime = 500, int blinkAmount = 1, int blinkWaitTime = 100)
         {
+            led.PinMode = GpioPinDriveMode.Output;
             Task.Run(async () =>
             {
                 for (var i = 0; i < blinkAmount; i++)

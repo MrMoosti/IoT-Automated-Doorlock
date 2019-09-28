@@ -18,10 +18,18 @@ namespace RfidScanner
         private readonly IUnitOfWork _unitOfWork;
         private readonly DoorService _doorService;
 
+        private Button button;
+        private bool access;
+        private bool readAgain;
+
         public Scanner(IUnitOfWork unitOfWork, DoorService doorService)
         {
             _unitOfWork = unitOfWork;
             _doorService = doorService;
+
+            button = new Button(Pi.Gpio[BcmPin.Gpio17], GpioPinResistorPullMode.PullUp);
+
+            button.Pressed += (s, e) => ContinueReading();
         }
 
         public Task Initialize()
@@ -30,17 +38,21 @@ namespace RfidScanner
             return Run();
         }
 
+        private void ContinueReading()
+        {
+            if(access)
+            {
+                "Door has been closed".Info();
+                access = false;
+                readAgain = true;
+            }
+        }
+
         private async Task Run()
         {
             "Idle".Info();
 
             var device = new RFIDControllerMfrc522(Pi.Spi.Channel0, 500000, Pi.Gpio[22]);
-
-            var redLed = Pi.Gpio[BcmPin.Gpio18];
-            var greenLed = Pi.Gpio[BcmPin.Gpio22];
-
-            redLed.PinMode = GpioPinDriveMode.Output;
-            greenLed.PinMode = GpioPinDriveMode.Output;
 
             while (true)
             {
@@ -65,29 +77,36 @@ namespace RfidScanner
                     if (secretText == "HelloHelloHellos")
                     {
                         // Card with access
-                        "Door unlocked!".Info();
-                        //ControlLed.TurnOfLeds(leds);
-                        ControlLed.BlinkLed(greenLed, 3000);
+                        "Access granted!".Info();
+                        ControlLed.BlinkLed(Pi.Gpio[BcmPin.Gpio22], -1);
 
                         await _unitOfWork.Logs.AddAsync(new Log
                         {
                             AttemptType = AttemptType.Success,
                             Message = "Door has been successfully unlocked."
                         }).ConfigureAwait(false);
-                        // Wait until button is pressed to continue
+
+                        access = true;
+                        //Wait until button is pressed.
+                        while(!readAgain)
+                        {
+                            System.Threading.Thread.Sleep(500);
+                        }
+                        readAgain = false;
+                        ControlLed.BlinkLed(Pi.Gpio[BcmPin.Gpio22], 0);
+
                     }
                     else
                     {
                         // Card without access
                         "Access denied!".Info();
-                        //ControlLed.TurnOfLeds(leds);
-                        ControlLed.BlinkLed(redLed, 3000);
+                        ControlLed.BlinkLed(Pi.Gpio[BcmPin.Gpio18], 3000);
                         await _unitOfWork.Logs.AddAsync(new Log
                         {
                             AttemptType = AttemptType.Fail,
                             Message = "Card does not have permission to unlock door!"
                         }).ConfigureAwait(false);
-                        // Continue allow reading
+
                     }
 
                 }
@@ -101,6 +120,9 @@ namespace RfidScanner
                         Message = "Authentication error, can't read card!"
                     }).ConfigureAwait(false);
                 }
+
+                device.ClearCardSelection();
+                await Task.Delay(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
             }
         }
     }
