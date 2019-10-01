@@ -13,7 +13,7 @@ namespace Rfid.Persistence.Domain.Collections
         [BsonElement("Temprature")]
         public double Temprature { get; set; }
 
-        [BsonElement("Temprature")]
+        [BsonElement("State")]
         public CpuState State { get; set;}
     }
 }
