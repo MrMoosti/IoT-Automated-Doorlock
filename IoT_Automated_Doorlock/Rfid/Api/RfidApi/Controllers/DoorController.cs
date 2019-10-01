@@ -1,5 +1,9 @@
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using RfidApi.Core.Services;
+using Rfid.Persistence.UnitOfWorks;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Rfid.Persistence.Domain.Collections;
 
 namespace RfidApi.Controllers
 {
@@ -7,52 +11,20 @@ namespace RfidApi.Controllers
     [ApiController]
     public class DoorController : ControllerBase
     {
-        /// <summary>
-        /// Get the cpu temperature in celsius.
-        /// </summary>
-        /// <example>
-        /// GET: api/CpuTemp/celsius
-        /// </example>
-        /// <returns>
-        /// The CPU temp in celsius.
-        /// </returns>
-        [HttpGet("celsius")]
-        public double GetCelsius()
+
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IDoorService _doorService;
+
+        public DoorController(IUnitOfWork unitOfWork, IDoorService doorService)
         {
-            return _cpuTempService.GetCpuTemp().Celsius;
+            _unitOfWork = unitOfWork;
+            _doorService = doorService;
         }
 
-
-        /// <summary>
-        /// Get the cpu temperature in fahrenheit.
-        /// </summary>
-        /// <example>
-        /// GET: api/CpuTemp/fahrenheit
-        /// </example>
-        /// <returns>
-        /// The CPU temp in fahrenheit.
-        /// </returns>
-        [HttpGet("fahrenheit")]
-        public double GetFahrenheit()
+        [HttpGet("state")]
+        public Task<IEnumerable<Door>> GetCurrentDoorState()
         {
-            return _cpuTempService.GetCpuTemp().Fahrenheit;
+            return _doorService.GetCurrentDoorState();
         }
-
-
-        /// <summary>
-        /// Get the cpu temperature in Kelvin.
-        /// </summary>
-        /// <example>
-        /// GET: api/CpuTemp/Kelvin
-        /// </example>
-        /// <returns>
-        /// The CPU temp in Kelvin.
-        /// </returns>
-        [HttpGet("kelvin")]
-        public double GetKelvin()
-        {
-            return _cpuTempService.GetCpuTemp().Kelvin;
-        }
-
     }
 }
