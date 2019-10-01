@@ -15,7 +15,6 @@ namespace Rfid.Persistence.UnitOfWorks
         /// </summary>
         ILogRepository Logs { get; }
         IDoorRepository DoorState { get; }
-
         ICpuRepository CpuTemprature { get; }
     }
 }
