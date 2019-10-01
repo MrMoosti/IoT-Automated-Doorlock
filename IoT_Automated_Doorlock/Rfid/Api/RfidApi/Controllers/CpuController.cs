@@ -5,12 +5,12 @@ namespace RfidApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CpuTempController : ControllerBase
+    public class CpuController : ControllerBase
     {
 
         private readonly ICpuTempService _cpuTempService;
 
-        public CpuTempController(ICpuTempService cpuTempService)
+        public CpuController(ICpuTempService cpuTempService)
         {
             _cpuTempService = cpuTempService;
         }
