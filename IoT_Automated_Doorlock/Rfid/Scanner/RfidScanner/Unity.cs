@@ -46,6 +46,7 @@ namespace RfidScanner
             container.RegisterType<ILogger, Logger>(new PerResolveLifetimeManager());
             container.RegisterSingleton<RfidMenu>();
             container.RegisterSingleton<Scanner>();
+            container.RegisterSingleton<CpuTemp>();
 
 
             //DI for the persistence database.
@@ -56,6 +57,7 @@ namespace RfidScanner
             container.RegisterType<IUserRepository, UserRepository>(new PerResolveLifetimeManager());
             container.RegisterType<ILogRepository, LogRepository>(new PerResolveLifetimeManager());
             container.RegisterType<IDoorRepository, DoorRepository>(new PerResolveLifetimeManager());
+            container.RegisterType<ICpuRepository, CpuRepository>(new PerResolveLifetimeManager());
 
             #endregion
         }

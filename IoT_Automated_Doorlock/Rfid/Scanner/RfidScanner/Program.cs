@@ -19,7 +19,8 @@ namespace RfidScanner
         private static readonly Dictionary<ConsoleKey, string> StartOptions = new Dictionary<ConsoleKey, string>
                                                                              {
                                                                                  { ConsoleKey.M, "RFID Menu" },
-                                                                                 { ConsoleKey.R, "Program" }
+                                                                                 { ConsoleKey.R, "Program" },
+                                                                                 { ConsoleKey.B, "CPU Temp"}
                                                                              };
 
 
@@ -41,6 +42,9 @@ namespace RfidScanner
                         break;
                     case ConsoleKey.R:
                         await Unity.Resolve<Scanner>().Initialize().ConfigureAwait(false);
+                        break;
+                    case ConsoleKey.B:
+                        await Unity.Resolve<CpuTemp>().Initialize().ConfigureAwait(false);
                         break;
                     case ConsoleKey.Escape:
                         exit = true;

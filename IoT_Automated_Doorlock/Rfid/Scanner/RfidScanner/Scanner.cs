@@ -2,6 +2,7 @@
 using Rfid.Persistence.UnitOfWorks;
 using RfidScanner.Helpers;
 using Swan.Logging;
+using RfidScanner.Services;
 using System;
 using System.Text;
 using System.Threading.Tasks;
