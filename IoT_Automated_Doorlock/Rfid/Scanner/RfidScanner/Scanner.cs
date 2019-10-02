@@ -19,7 +19,7 @@ namespace RfidScanner
         private readonly IUnitOfWork _unitOfWork;
         private readonly DoorService _doorService;
 
-        private Button button;
+        private readonly Button button;
         private bool access;
         private bool readAgain;
 
@@ -89,7 +89,7 @@ namespace RfidScanner
                             Message = "Door has been successfully unlocked."
                         }).ConfigureAwait(false);
 
-                        await _doorService.UpdateDoorStateAsync(DoorStatus.Open);
+                        await _doorService.UpdateDoorStateAsync(DoorStatus.Open).ConfigureAwait(false);
 
                         access = true;
                         //Wait until button is pressed.
@@ -101,7 +101,7 @@ namespace RfidScanner
 
                         ControlLed.BlinkLed(Pi.Gpio[BcmPin.Gpio22], 0);
 
-                        await _doorService.UpdateDoorStateAsync(DoorStatus.Closed);
+                        await _doorService.UpdateDoorStateAsync(DoorStatus.Closed).ConfigureAwait(false);
 
                     }
                     else
