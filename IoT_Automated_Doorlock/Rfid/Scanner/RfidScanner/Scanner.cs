@@ -95,7 +95,7 @@ namespace RfidScanner
                         //Wait until button is pressed.
                         while(!readAgain)
                         {
-                            System.Threading.Thread.Sleep(500);
+                            await Task.Delay(500).ConfigureAwait(false);
                         }
                         readAgain = false;
 
