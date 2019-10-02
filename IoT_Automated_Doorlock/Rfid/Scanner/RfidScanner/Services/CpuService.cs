@@ -20,7 +20,7 @@ namespace RfidScanner.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task SaveCpuTemprature()
+        public async Task SaveCpuTemperature()
         {
             var cpu = new CpuTemperature();
             while (true)
