@@ -19,7 +19,6 @@ namespace RfidScanner
         private readonly IUnitOfWork _unitOfWork;
         private readonly DoorService _doorService;
 
-        private readonly Button _button;
         private bool _access;
         private bool _readAgain;
 
@@ -28,9 +27,9 @@ namespace RfidScanner
             _unitOfWork = unitOfWork;
             _doorService = doorService;
 
-            _button = new Button(Pi.Gpio[BcmPin.Gpio17], GpioPinResistorPullMode.PullUp);
+            var button = new Button(Pi.Gpio[BcmPin.Gpio17], GpioPinResistorPullMode.PullUp);
 
-            _button.Pressed += (s, e) => ContinueReading();
+            button.Pressed += (s, e) => ContinueReading();
 
         }
 
