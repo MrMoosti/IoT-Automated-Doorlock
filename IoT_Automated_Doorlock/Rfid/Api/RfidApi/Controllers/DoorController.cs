@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using RfidApi.Core.Services;
-using Rfid.Persistence.UnitOfWorks;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Rfid.Persistence.Domain.Collections;
@@ -12,12 +11,10 @@ namespace RfidApi.Controllers
     public class DoorController : ControllerBase
     {
 
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IDoorService _doorService;
 
-        public DoorController(IUnitOfWork unitOfWork, IDoorService doorService)
+        public DoorController(IDoorService doorService)
         {
-            _unitOfWork = unitOfWork;
             _doorService = doorService;
         }
 
