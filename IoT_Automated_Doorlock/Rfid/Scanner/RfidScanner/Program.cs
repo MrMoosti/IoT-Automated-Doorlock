@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Swan;
 using Unosquare.RaspberryIO;
 using Unosquare.WiringPi;
-using Rfid.Persistence.MongoDb;
 
 [assembly: AssemblyInformationalVersion("1.0.*")]
 [assembly: AssemblyProduct("Rfid Scanner")]
