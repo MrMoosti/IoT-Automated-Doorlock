@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Linq;
 
-namespace RfidScanner.Helper
+namespace RfidScanner.Helpers
 {
 
     public static class RandomStringGenerator

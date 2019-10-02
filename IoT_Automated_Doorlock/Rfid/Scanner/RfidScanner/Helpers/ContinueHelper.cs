@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Swan;
 
-namespace RfidScanner.Helper
+namespace RfidScanner.Helpers
 {
 
     public static class ContinueHelper
