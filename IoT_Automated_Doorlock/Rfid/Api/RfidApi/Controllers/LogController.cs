@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RfidApi.Core.Services;
-using Rfid.Persistence.UnitOfWorks;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Rfid.Persistence.Domain.Collections;
@@ -11,15 +9,6 @@ namespace RfidApi.Controllers
     [ApiController]
     public class LogController : ControllerBase
     {
-
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogService _logService;
-
-        public LogController(IUnitOfWork unitOfWork, ILogService logService)
-        {
-            _unitOfWork = unitOfWork;
-            _logService = logService;
-        }
 
         [HttpGet("failed")]
         public Task<IEnumerable<Log>> GetAllFailedLogs()
