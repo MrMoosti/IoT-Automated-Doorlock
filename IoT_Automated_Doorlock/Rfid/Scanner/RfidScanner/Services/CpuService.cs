@@ -3,7 +3,6 @@ using Rfid.Persistence.Domain.Enums;
 using Rfid.Persistence.UnitOfWorks;
 using Iot.Device.CpuTemperature;
 using System;
-using System.Threading;
 using Rfid.Persistence.Domain.Collections;
 
 namespace RfidScanner.Services
@@ -27,15 +26,15 @@ namespace RfidScanner.Services
             {
                 if(cpu.IsAvailable)
                 {
-                    var cpu_string  = $"The CPU temperature in Celsius is {cpu.Temperature.Celsius} C";
-                    Console.WriteLine(cpu_string);
+                    var cpuString  = $"The CPU temperature in Celsius is {cpu.Temperature.Celsius} C";
+                    Console.WriteLine(cpuString);
 
                     if(cpu.Temperature.Celsius <= 10) 
                     {
                         await _unitOfWork.CpuTemprature.AddAsync(new Cpu
                         {
                             Temprature = cpu.Temperature.Celsius,
-                            State = CpuState.CRITICAL
+                            State = CpuState.Critical
                         }).ConfigureAwait(false);
                     }
                     else if(cpu.Temperature.Celsius > 10 && cpu.Temperature.Celsius <= 20) 
@@ -43,7 +42,7 @@ namespace RfidScanner.Services
                         await _unitOfWork.CpuTemprature.AddAsync(new Cpu
                         {
                             Temprature = cpu.Temperature.Celsius,
-                            State = CpuState.COLD
+                            State = CpuState.Cold
                         }).ConfigureAwait(false);
                     }
                     else if(cpu.Temperature.Celsius > 20 && cpu.Temperature.Celsius <= 55)
@@ -51,7 +50,7 @@ namespace RfidScanner.Services
                         await _unitOfWork.CpuTemprature.AddAsync(new Cpu
                         {
                             Temprature = cpu.Temperature.Celsius,
-                            State = CpuState.OK
+                            State = CpuState.Ok
                         }).ConfigureAwait(false);
                     }
                     else if(cpu.Temperature.Celsius > 55 && cpu.Temperature.Celsius >= 65)
@@ -59,7 +58,7 @@ namespace RfidScanner.Services
                         await _unitOfWork.CpuTemprature.AddAsync(new Cpu
                         {
                             Temprature = cpu.Temperature.Celsius,
-                            State = CpuState.HOT
+                            State = CpuState.Hot
                         }).ConfigureAwait(false);
                     }
                     else
@@ -67,7 +66,7 @@ namespace RfidScanner.Services
                         await _unitOfWork.CpuTemprature.AddAsync(new Cpu
                         {
                             Temprature = cpu.Temperature.Celsius,
-                            State = CpuState.CRITICAL
+                            State = CpuState.Critical
                         }).ConfigureAwait(false);
                     }
                     
