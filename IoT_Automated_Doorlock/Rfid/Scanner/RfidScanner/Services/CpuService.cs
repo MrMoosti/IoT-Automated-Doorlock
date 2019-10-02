@@ -22,12 +22,12 @@ namespace RfidScanner.Services
 
         public async Task SaveCpuTemprature()
         {
-            CpuTemperature cpu = new CpuTemperature();
+            var cpu = new CpuTemperature();
             while (true)
             {
                 if(cpu.IsAvailable)
                 {
-                    string cpu_string  = $"The CPU temperature in Celsius is {cpu.Temperature.Celsius} C";
+                    var cpu_string  = $"The CPU temperature in Celsius is {cpu.Temperature.Celsius} C";
                     Console.WriteLine(cpu_string);
 
                     if(cpu.Temperature.Celsius <= 10) 
