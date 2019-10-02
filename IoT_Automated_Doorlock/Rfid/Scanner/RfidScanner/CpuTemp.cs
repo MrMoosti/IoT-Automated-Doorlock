@@ -22,10 +22,10 @@ namespace RfidScanner
             return Run();
         }
 
-        private async Task Run()
+        private Task Run()
         {
             "Reading CPU Temprature...".Info();
-            await _cpuService.SaveCpuTemprature();
+            return _cpuService.SaveCpuTemperature();
         }
     }
 }

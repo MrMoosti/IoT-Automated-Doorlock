@@ -19,16 +19,15 @@ namespace RfidScanner
         private readonly IUnitOfWork _unitOfWork;
         private readonly DoorService _doorService;
 
-        private Button button;
-        private bool access;
-        private bool readAgain;
+        private bool _access;
+        private bool _readAgain;
 
         public Scanner(IUnitOfWork unitOfWork, DoorService doorService)
         {
             _unitOfWork = unitOfWork;
             _doorService = doorService;
 
-            button = new Button(Pi.Gpio[BcmPin.Gpio17], GpioPinResistorPullMode.PullUp);
+            var button = new Button(Pi.Gpio[BcmPin.Gpio17], GpioPinResistorPullMode.PullUp);
 
             button.Pressed += (s, e) => ContinueReading();
 
@@ -42,11 +41,11 @@ namespace RfidScanner
 
         private void ContinueReading()
         {
-            if(access)
+            if(_access)
             {
                 "Door has been closed".Info();
-                access = false;
-                readAgain = true;
+                _access = false;
+                _readAgain = true;
             }
         }
 
@@ -89,19 +88,19 @@ namespace RfidScanner
                             Message = "Door has been successfully unlocked."
                         }).ConfigureAwait(false);
 
-                        await _doorService.UpdateDoorStateAsync(DoorStatus.Open);
+                        await _doorService.UpdateDoorStateAsync(DoorStatus.Open).ConfigureAwait(false);
 
-                        access = true;
+                        _access = true;
                         //Wait until button is pressed.
-                        while(!readAgain)
+                        while(!_readAgain)
                         {
-                            System.Threading.Thread.Sleep(500);
+                            await Task.Delay(500).ConfigureAwait(false);
                         }
-                        readAgain = false;
+                        _readAgain = false;
 
                         ControlLed.BlinkLed(Pi.Gpio[BcmPin.Gpio22], 0);
 
-                        await _doorService.UpdateDoorStateAsync(DoorStatus.Closed);
+                        await _doorService.UpdateDoorStateAsync(DoorStatus.Closed).ConfigureAwait(false);
 
                     }
                     else
