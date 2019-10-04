@@ -1,15 +1,24 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Rfid.Persistence.Domain.Collections;
+using Rfid.Persistence.UnitOfWorks;
 
 namespace RfidApi.Core.Services.Implementations
 {
 
     public class DoorService : IDoorService
     {
-        public Task<IEnumerable<Door>> GetCurrentDoorState()
+        private readonly IUnitOfWork _unitOfWork;
+
+        public DoorService(IUnitOfWork unitOfWork)
         {
-            throw new System.NotImplementedException();
+            _unitOfWork = unitOfWork;
+        }
+        
+        public async Task<Door> GetCurrentDoorState()
+        {
+            var allDoors =  await _unitOfWork.DoorState.GetAllAsync();
+            return allDoors[0];
         }
     }
 }

@@ -7,7 +7,7 @@ namespace RfidApi.Core.Services
 
     public interface IDoorService
     {
-        Task<IEnumerable<Door>> GetCurrentDoorState();
+        Task<Door> GetCurrentDoorState();
 
     }
 }

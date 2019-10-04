@@ -1,0 +1,13 @@
+GET https://localhost:5001/api/version HTTP/1.1
+
+
+###
+
+GET https://localhost:5001/api/cpu/celsius HTTP/1.1
+
+###
+
+
+GET https://localhost:5001/api/door/state HTTP/1.1
+
+###

@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Rfid.Persistence.Domain\Rfid.Persistence.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\Rfid.Persistence.MongoDb\Rfid.Persistence.MongoDb.csproj" />
   </ItemGroup>
 
 </Project>

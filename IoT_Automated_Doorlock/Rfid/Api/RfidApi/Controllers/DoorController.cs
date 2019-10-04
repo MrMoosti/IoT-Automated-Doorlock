@@ -19,7 +19,7 @@ namespace RfidApi.Controllers
         }
 
         [HttpGet("state")]
-        public Task<IEnumerable<Door>> GetCurrentDoorState()
+        public Task<Door> GetCurrentDoorState()
         {
             return _doorService.GetCurrentDoorState();
         }
