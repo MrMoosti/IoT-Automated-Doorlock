@@ -14,7 +14,7 @@ namespace Rfid.Persistence.UnitOfWorks
         /// Contains all the queries to the <see cref="Log"/> table/collection.
         /// </summary>
         ILogRepository Logs { get; }
-        IDoorRepository DoorState { get; }
+        IDoorRepository Door { get; }
         ICpuRepository CpuTemprature { get; }
     }
 }

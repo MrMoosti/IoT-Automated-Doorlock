@@ -13,4 +13,7 @@
     <ProjectReference Include="..\..\Shared\Rfid.Persistence.MongoDb\Rfid.Persistence.MongoDb.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Services\DoorDto.cs" />
+  </ItemGroup>
 </Project>

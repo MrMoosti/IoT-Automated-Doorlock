@@ -3,6 +3,7 @@ using RfidApi.Core.Services;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Rfid.Persistence.Domain.Collections;
+using Rfid.Persistence.Domain.Enums;
 
 namespace RfidApi.Controllers
 {
@@ -19,7 +20,7 @@ namespace RfidApi.Controllers
         }
 
         [HttpGet("state")]
-        public Task<Door> GetCurrentDoorState()
+        public Task<DoorDto> GetCurrentDoorState()
         {
             return _doorService.GetCurrentDoorState();
         }

@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Rfid.Persistence.Domain.Collections;
 using Rfid.Persistence.UnitOfWorks;
 
 namespace RfidApi.Core.Services.Implementations
@@ -15,10 +13,10 @@ namespace RfidApi.Core.Services.Implementations
             _unitOfWork = unitOfWork;
         }
         
-        public async Task<Door> GetCurrentDoorState()
+        public async Task<DoorDto> GetCurrentDoorState()
         {
-            var allDoors =  await _unitOfWork.DoorState.GetAllAsync();
-            return allDoors[0];
+            var door = await _unitOfWork.Door.FindAsync(x => true).ConfigureAwait(false);
+            return door;
         }
     }
 }

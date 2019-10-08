@@ -18,10 +18,10 @@ namespace RfidScanner.Services
 
         public async Task UpdateDoorStateAsync(DoorStatus status)
         {
-            var doors = await _unitOfWork.DoorState.GetAllAsync().ConfigureAwait(false);
+            var doors = await _unitOfWork.Door.GetAllAsync().ConfigureAwait(false);
             var door = doors[0];
             door.DoorStatus = status;
-            await _unitOfWork.DoorState.UpdateValue(x => x.BsonObjectId, door.BsonObjectId, x => x.DoorStatus, door.DoorStatus).ConfigureAwait(false);
+            await _unitOfWork.Door.UpdateValue(x => x.BsonObjectId, door.BsonObjectId, x => x.DoorStatus, door.DoorStatus).ConfigureAwait(false);
         }
     }
 }

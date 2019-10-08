@@ -17,4 +17,7 @@
     <ProjectReference Include="..\..\Shared\Rfid.Persistence.MongoDb\Rfid.Persistence.MongoDb.csproj" />
     <ProjectReference Include="..\RfidApi.Core\RfidApi.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dtos\" />
+  </ItemGroup>
 </Project>

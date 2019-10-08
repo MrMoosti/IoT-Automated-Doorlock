@@ -8,14 +8,14 @@ namespace Rfid.Persistence.MongoDb.UnitOfWorks
 
         /// <inheritdoc/>
         public ILogRepository Logs { get; }
-        public IDoorRepository DoorState { get; }
+        public IDoorRepository Door { get; }
 
         public ICpuRepository CpuTemprature { get; }
 
         public UnitOfWork(ILogRepository logRepository, IDoorRepository doorRepository, ICpuRepository cpuRepository)
         {
             Logs = logRepository;
-            DoorState = doorRepository;
+            Door = doorRepository;
             CpuTemprature = cpuRepository;
         }
 
