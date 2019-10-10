@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Rfid.Persistence.Domain.Collections;
 using Rfid.Persistence.UnitOfWorks;
 
 namespace RfidApi.Core.Services.Implementations
@@ -13,7 +14,7 @@ namespace RfidApi.Core.Services.Implementations
             _unitOfWork = unitOfWork;
         }
         
-        public async Task<DoorDto> GetCurrentDoorState()
+        public async Task<Door> GetCurrentDoorState()
         {
             var door = await _unitOfWork.Door.FindAsync(x => true).ConfigureAwait(false);
             return door;

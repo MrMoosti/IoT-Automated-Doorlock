@@ -31,6 +31,6 @@ namespace Rfid.Persistence.Domain
         /// The <see cref="BsonDateTime"/> of when the <see cref="Document"/> was added to the collection.
         /// </summary>
         [BsonElement("AddedAtUtc")]
-        public BsonDateTime AddedAtUtc { get; }
+        public DateTime AddedAtUtc { get; }
     }
 }
