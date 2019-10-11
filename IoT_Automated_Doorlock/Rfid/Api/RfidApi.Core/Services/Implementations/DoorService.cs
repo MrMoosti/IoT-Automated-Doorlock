@@ -16,8 +16,7 @@ namespace RfidApi.Core.Services.Implementations
         
         public async Task<Door> GetCurrentDoorState()
         {
-            var door = await _unitOfWork.Door.FindAsync(x => true).ConfigureAwait(false);
-            return door;
+            return await _unitOfWork.Door.FindAsync(x => true).ConfigureAwait(false);
         }
     }
 }

@@ -19,9 +19,10 @@ namespace RfidApi.Controllers
         }
 
         [HttpGet("state")]
-        public Task<Door> GetCurrentDoorState()
+        public async Task<string> GetCurrentDoorState()
         {
-            return _doorService.GetCurrentDoorState();
+            var door = await _doorService.GetCurrentDoorState().ConfigureAwait(false);
+            return door.DoorStatus.ToString();
         }
     }
 }
