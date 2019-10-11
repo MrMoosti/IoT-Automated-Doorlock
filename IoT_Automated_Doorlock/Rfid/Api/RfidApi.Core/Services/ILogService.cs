@@ -6,16 +6,16 @@ namespace RfidApi.Core.Services
 {
     public interface ILogService
     {
-        Task<IEnumerable<User>> GetAllLogs();
+        Task<IEnumerable<Log>> GetAllLogs();
 
-        Task<IEnumerable<User>> GetAllFailedLogs();
+        Task<IEnumerable<Log>> GetAllFailedLogs();
 
-        Task<IEnumerable<Door>> GetAllSucceededLogs();
+        Task<IEnumerable<Log>> GetAllSucceededLogs();
 
-        Task<IEnumerable<Door>> GetAllLogsFromThisMonth();
+        Task<IEnumerable<Log>> GetAllLogsFromThisMonth();
 
-        Task<IEnumerable<Door>> GetAllLogsFromThisWeek();
+        Task<IEnumerable<Log>> GetAllLogsFromThisWeek();
 
-        Task<IEnumerable<Door>> GetAllLogsFromToday();
+        Task<IEnumerable<Log>> GetAllLogsFromToday();
     }
 }

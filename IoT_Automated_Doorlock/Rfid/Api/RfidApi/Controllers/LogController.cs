@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Rfid.Persistence.Domain.Collections;
+using RfidApi.Core.Services;
 
 namespace RfidApi.Controllers
 {
@@ -9,41 +10,47 @@ namespace RfidApi.Controllers
     [ApiController]
     public class LogController : ControllerBase
     {
+        private readonly ILogService _logService;
+
+        public LogController(ILogService logService)
+        {
+            _logService = logService;
+        }
 
         [HttpGet("failed")]
         public Task<IEnumerable<Log>> GetAllFailedLogs()
         {
-            throw new System.NotImplementedException();
+            return _logService.GetAllFailedLogs();
         }
 
         [HttpGet("all")]
         public Task<IEnumerable<Log>> GetAllLogs()
         {
-            throw new System.NotImplementedException();
+            return _logService.GetAllLogs();
         }
 
         [HttpGet("current-month")]
         public Task<IEnumerable<Log>> GetAllLogsFromThisMonth()
         {
-            throw new System.NotImplementedException();
+            return _logService.GetAllLogsFromThisMonth();
         }
 
         [HttpGet("current-week")]
         public Task<IEnumerable<Log>> GetAllLogsFromThisWeek()
         {
-            throw new System.NotImplementedException();
+            return _logService.GetAllLogsFromThisWeek();
         }
 
         [HttpGet("today")]
         public Task<IEnumerable<Log>> GetAllLogsFromToday()
         {
-            throw new System.NotImplementedException();
+            return _logService.GetAllLogsFromToday();
         }
 
         [HttpGet("succeeded")]
         public Task<IEnumerable<Log>> GetAllSucceededLogs()
         {
-            throw new System.NotImplementedException();
+            return _logService.GetAllSucceededLogs();
         }
     }
 }
