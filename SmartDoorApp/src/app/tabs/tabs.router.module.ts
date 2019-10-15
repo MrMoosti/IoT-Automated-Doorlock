@@ -28,7 +28,7 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'cpu-logs',
+        path: 'cpu-temp',
         children: [
           {
             path: '',
