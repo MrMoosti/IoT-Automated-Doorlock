@@ -15,14 +15,57 @@ import {
 export class LogsPage implements OnInit {
   logs: Log[] = [];
   attemptType = AttemptType;
+  logSelect: any;
 
   constructor(private logService: LogService) {}
 
   ngOnInit() {
-    this.logService.getAllLogs().subscribe((data: Log[]) => {
-      this.logs = data;
-      console.log(this.logs[0]);
-    });
+    this.getLogs();
+    // this.logService.getTodaysLogs().subscribe((data: Log[]) => {
+    //   this.logs = data;
+    //   console.log(this.logs[0]);
+    // });
+  }
+
+  getLogs() {
+    switch (this.logSelect) {
+      case "today":
+        this.logService.getTodaysLogs().subscribe((data: Log[]) => {
+          this.logs = data;
+        });
+        break;
+      case "week":
+        this.logService.getThisWeeksLogs().subscribe((data: Log[]) => {
+          this.logs = data;
+        });
+        break;
+      case "month":
+        this.logService.getThisMonthsLogs().subscribe((data: Log[]) => {
+          this.logs = data;
+        });
+        break;
+      case "succeeded":
+        this.logService.getAllSucceededLogs().subscribe((data: Log[]) => {
+          this.logs = data;
+        });
+        break;
+      case "failed":
+        this.logService.getAllFailedLogs().subscribe((data: Log[]) => {
+          this.logs = data;
+        });
+        break;
+      case "all":
+        this.logService.getAllLogs().subscribe((data: Log[]) => {
+          this.logs = data;
+        });
+        break;
+      default:
+        this.logService.getTodaysLogs().subscribe((data: Log[]) => {
+          this.logs = data;
+        });
+        this.logSelect = "today";
+        break;
+    }
   }
 
   getColor(value) {

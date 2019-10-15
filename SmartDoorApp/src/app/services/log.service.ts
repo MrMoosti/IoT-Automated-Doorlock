@@ -10,7 +10,7 @@ import { throwError } from "rxjs/internal/observable/throwError";
   providedIn: "root"
 })
 export class LogService {
-  url_api: string = "https://localhost:5001/";
+  url_api: string = "https://localhost:5001/api/log/";
 
   constructor(private http: HttpClient) {}
 
@@ -21,8 +21,28 @@ export class LogService {
     })
   };
 
+  getTodaysLogs() {
+    return this.http.get(this.url_api + "today");
+  }
+
+  getThisWeeksLogs() {
+    return this.http.get(this.url_api + "current-week");
+  }
+
+  getThisMonthsLogs() {
+    return this.http.get(this.url_api + "current-month");
+  }
+
+  getAllSucceededLogs() {
+    return this.http.get(this.url_api + "succeeded");
+  }
+
+  getAllFailedLogs() {
+    return this.http.get(this.url_api + "failed");
+  }
+
   getAllLogs() {
-    return this.http.get(this.url_api + "api/log/all");
+    return this.http.get(this.url_api + "all");
   }
 
   // Handle API errors
