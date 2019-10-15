@@ -8,45 +8,45 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
+        path: 'logs',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+              import('../logs/logs.module').then(m => m.LogsPageModule)
           }
         ]
       },
       {
-        path: 'tab2',
+        path: 'door-state',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+              import('../door-state/door-state.module').then(m => m.DoorStatePageModule)
           }
         ]
       },
       {
-        path: 'tab3',
+        path: 'cpu-logs',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+              import('../cpu-temp/cpu-temp.module').then(m => m.CpuTempPageModule)
           }
         ]
       },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/tabs/door-state',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: '/tabs/door-state',
     pathMatch: 'full'
   }
 ];
