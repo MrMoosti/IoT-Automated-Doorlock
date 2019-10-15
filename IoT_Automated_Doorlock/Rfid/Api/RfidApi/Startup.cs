@@ -26,7 +26,7 @@ namespace RfidApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(x=>x.EnableEndpointRouting = false).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddMvc(x => x.EnableEndpointRouting = false).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ICpuTempService, CpuService>();
             services.AddScoped<IDoorService, DoorService>();
@@ -50,7 +50,12 @@ namespace RfidApi
                 app.UseHsts();
             }
 
+            app.UseCors(builder => builder.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowAnyOrigin());
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseMvc();
         }
     }
