@@ -21,10 +21,6 @@ export class LogsPage implements OnInit {
 
   ngOnInit() {
     this.getLogs();
-    // this.logService.getTodaysLogs().subscribe((data: Log[]) => {
-    //   this.logs = data;
-    //   console.log(this.logs[0]);
-    // });
   }
 
   getLogs() {
@@ -42,6 +38,7 @@ export class LogsPage implements OnInit {
       case "month":
         this.logService.getThisMonthsLogs().subscribe((data: Log[]) => {
           this.logs = data;
+          console.log(data);
         });
         break;
       case "succeeded":

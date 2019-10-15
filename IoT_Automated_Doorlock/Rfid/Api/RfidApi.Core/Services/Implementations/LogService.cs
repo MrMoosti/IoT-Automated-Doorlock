@@ -28,9 +28,9 @@ namespace RfidApi.Core.Services.Implementations
 
         public Task<IEnumerable<Log>> GetAllLogsFromThisMonth()
         {
-            var startOfTthisMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);       
-            var firstDay = startOfTthisMonth.AddMonths(-1);
-            var lastDay = startOfTthisMonth.AddDays(-1);
+            var startOfTthisMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+            var firstDay = startOfTthisMonth;
+            var lastDay = startOfTthisMonth.AddMonths(1).AddDays(-1);
             return _unitOfWork.Logs.WhereAsync(x => x.AddedAtUtc >= firstDay && x.AddedAtUtc <= lastDay);
         }
 
