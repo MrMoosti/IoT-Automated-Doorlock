@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CpuTempService } from '../services/cputemp.service';
-import { Cpu } from '../models/cpu';
-
 @Component({
   selector: 'app-tab3',
   templateUrl: 'cpu-temp.page.html',
@@ -9,13 +7,27 @@ import { Cpu } from '../models/cpu';
 })
 export class CpuTempPage  implements OnInit  {
   cpu: number;
+  cpuInterval: any;
 
-  constructor(private cpuTempService: CpuTempService) {}
-
-  ngOnInit() {
-    this.cpuTempService.getCpuTemperature().subscribe((data: Cpu) => {
+  constructor(private cpuTempService: CpuTempService) {
+    this.cpuTempService.
+    getCpuTemperature().subscribe((data: number) => {
       this.cpu = data;
     });
+  }
+
+  ngOnInit() {
+    var _this = this;
+    this.cpuInterval = setInterval(function() {
+      _this.updateCpu();
+    }, 5000);
+  }
+
+  updateCpu() {
+    this.cpuTempService.getCpuTemperature().subscribe((data: number) => {
+      this.cpu = data;
+      console.log(data);
+    })
   }
 
   getColor(value) {
@@ -32,6 +44,10 @@ export class CpuTempPage  implements OnInit  {
     } else {
       return "danger";
     }
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.cpuInterval);
   }
 
 }
