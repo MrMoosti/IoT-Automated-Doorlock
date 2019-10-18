@@ -21,6 +21,10 @@ export class LogService {
     })
   };
 
+  getLatestLog() {
+    return this.http.get(this.url_api + "latest");
+  }
+
   getTodaysLogs() {
     return this.http.get(this.url_api + "today");
   }

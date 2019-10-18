@@ -27,7 +27,7 @@ export class CpuTempPage  implements OnInit  {
     this.cpuTempService.getCpuTemperature().subscribe((data: number) => {
       this.cpu = data;
       console.log(data);
-    })
+    });
   }
 
   getColor(value) {

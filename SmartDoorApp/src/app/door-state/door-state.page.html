@@ -8,9 +8,10 @@
 
 <ion-content>
   <ion-card class="welcome-card" color="success">
-    <img class="ion-padding-top" src="/assets/locked.svg" alt="" />
+    <img *ngIf="doorState == 'OPEN'" class="ion-padding-top" src="/assets/unlocked.svg" alt="" />
+    <img *ngIf="doorState == 'CLOSED'" class="ion-padding-top" src="/assets/locked.svg" alt="" />
     <ion-card-header>
-      <ion-card-title class="ion-text-center">OPEN</ion-card-title>
+      <ion-card-title class="ion-text-center">{{doorState}}</ion-card-title>
     </ion-card-header>
   </ion-card>
   <ion-card class="welcome-card">
@@ -18,7 +19,7 @@
       <ion-card-title>Latest log</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p>Last log was recorded on 12/12/1970 23:00:12</p>
+      <p>Last log was recorded on {{log.addedAtUtc | date:'yyyy/MM/dd HH:mm:ss':'+0200'}}</p>
     </ion-card-content>
   </ion-card>
 </ion-content>

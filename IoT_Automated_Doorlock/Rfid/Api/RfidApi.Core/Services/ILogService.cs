@@ -17,5 +17,7 @@ namespace RfidApi.Core.Services
         Task<IEnumerable<Log>> GetAllLogsFromThisWeek();
 
         Task<IEnumerable<Log>> GetAllLogsFromToday();
+
+        Task<Log> GetLatestLog();
     }
 }

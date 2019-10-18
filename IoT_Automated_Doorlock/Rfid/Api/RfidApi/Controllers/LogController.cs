@@ -52,5 +52,11 @@ namespace RfidApi.Controllers
         {
             return _logService.GetAllSucceededLogs();
         }
+
+        [HttpGet("latest")]
+        public async Task<Log> GetLatestLog()
+        {
+            return await _logService.GetLatestLog();
+        }
     }
 }
