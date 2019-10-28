@@ -29,26 +29,27 @@ namespace RfidApi.Core.Services.Implementations
         public Task<IEnumerable<Log>> GetAllLogsFromThisMonth()
         {
             var startOfTthisMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
-            var firstDay = startOfTthisMonth;
-            var lastDay = startOfTthisMonth.AddMonths(1).AddDays(-1);
-            return _unitOfWork.Logs.WhereAsync(x => x.AddedAtUtc >= firstDay && x.AddedAtUtc <= lastDay);
+            var firstDay = ((DateTimeOffset)startOfTthisMonth).ToUnixTimeSeconds();
+            var lastDay = ((DateTimeOffset)startOfTthisMonth.AddMonths(1).AddDays(-1)).ToUnixTimeSeconds();
+            return _unitOfWork.Logs.WhereAsync(x => x.UnixTime >= firstDay && x.UnixTime <= lastDay);
         }
 
         public Task<IEnumerable<Log>> GetAllLogsFromThisWeek()
         {
             DateTime startOfWeek = DateTime.Today;
-            int delta = DayOfWeek.Monday - startOfWeek.DayOfWeek;
-            startOfWeek = startOfWeek.AddDays(delta);
-            DateTime endOfWeek = startOfWeek.AddDays(7);
+            int delta = DayOfWeek.Monday - DateTime.Today.DayOfWeek;
+            var unixStartOfWeek = ((DateTimeOffset)startOfWeek.AddDays(delta)).ToUnixTimeSeconds();
+            var unixEndOfWeek = ((DateTimeOffset)startOfWeek.AddDays(7)).ToUnixTimeSeconds();
 
-            return _unitOfWork.Logs.WhereAsync(x => x.AddedAtUtc > startOfWeek && x.AddedAtUtc < endOfWeek);
+            return _unitOfWork.Logs.WhereAsync(x => x.UnixTime > unixStartOfWeek && x.UnixTime < unixEndOfWeek);
         }
 
         public Task<IEnumerable<Log>> GetAllLogsFromToday()
         {
             var currentDay = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Now.Day);
-            var tomorrow = currentDay.AddDays(1);
-            return _unitOfWork.Logs.WhereAsync(x => x.AddedAtUtc >= currentDay && x.AddedAtUtc <= tomorrow);
+            var unixCurrentDay = ((DateTimeOffset)currentDay).ToUnixTimeSeconds();
+            var unixTomorrow = ((DateTimeOffset)currentDay.AddDays(1)).ToUnixTimeSeconds();
+            return _unitOfWork.Logs.WhereAsync(x => x.UnixTime >= unixCurrentDay && x.UnixTime <= unixTomorrow);
         }
 
         public Task<IEnumerable<Log>> GetAllSucceededLogs()
@@ -56,9 +57,9 @@ namespace RfidApi.Core.Services.Implementations
             return _unitOfWork.Logs.WhereAsync(x => x.AttemptType == AttemptType.Success);
         }
 
-        public async Task<Log> GetLatestLog()
+        public Task<Log> GetLatestLog()
         {
-            return await _unitOfWork.Logs.FindAsync(x => false).ConfigureAwait(false);
+            return _unitOfWork.Logs.FindAsync(x => true);
         }
     }
 }

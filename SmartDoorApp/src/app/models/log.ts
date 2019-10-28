@@ -7,7 +7,7 @@ export enum AttemptType {
 
 export class Log {
   bsonId: string;
-  addedAtUtc: string;
+  unixTime: number;
   uid: {};
   attemptType: AttemptType;
   message: string;

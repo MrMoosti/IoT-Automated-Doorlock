@@ -19,7 +19,7 @@
       <ion-card-title>Latest log</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p>Last log was recorded on {{log.addedAtUtc | date:'yyyy/MM/dd HH:mm:ss':'+0200'}}</p>
+      <p>Last log was recorded on {{log.unixTime * 1000 | date:'yyyy/MM/dd HH:mm:ss Z'}}</p>
     </ion-card-content>
   </ion-card>
 </ion-content>

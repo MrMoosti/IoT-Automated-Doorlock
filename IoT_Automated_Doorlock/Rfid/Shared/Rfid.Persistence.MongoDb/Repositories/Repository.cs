@@ -34,7 +34,6 @@ namespace Rfid.Persistence.MongoDb.Repositories
             return _mongoCollection.Find(FilterDefinition<T>.Empty).ToListAsync();
         }
 
-
         /// <inheritdoc />
         public async Task<IEnumerable<T>> WhereAsync(Expression<Func<T, bool>> predicate)
         {

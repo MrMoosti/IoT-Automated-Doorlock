@@ -11,8 +11,8 @@ namespace Rfid.Dtos
         [BsonElement("_id")]
         public ObjectId BsonObjectId { get; set; }
 
-        [BsonElement("AddedAtUtc")]
-        public BsonDateTime AddedAtUtc { get; }
+        [BsonElement("UnixTime")]
+        public long UnixTime { get; }
 
         [BsonElement("Status")]
         public DoorStatus DoorStatus { get; set; }

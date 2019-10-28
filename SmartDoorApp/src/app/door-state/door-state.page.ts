@@ -17,6 +17,7 @@ export class DoorStatePage implements OnInit {
   doorState: string;
   log: Log;
   doorInterval: any;
+  test: any;
   
   constructor(private doorStatusService: DoorstatusService, private logService: LogService) {
     this.log = new Log;
@@ -26,9 +27,9 @@ export class DoorStatePage implements OnInit {
 
   ngOnInit() {
     var _this = this;
-    this.doorInterval = setInterval(function() {
-      _this.updateDoorState();
-    }, 5000);
+    // this.doorInterval = setInterval(function() {
+    //   _this.updateDoorState();
+    // }, 5000);
   }
 
   updateDoorState() {
@@ -37,7 +38,9 @@ export class DoorStatePage implements OnInit {
     });
 
     this.logService.getLatestLog().subscribe((data: Log) => {
+      console.log(data.unixTime);
       this.log = data;
+      console.log(data);
     })
   }
 

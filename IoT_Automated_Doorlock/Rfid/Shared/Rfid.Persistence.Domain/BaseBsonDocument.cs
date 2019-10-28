@@ -14,7 +14,7 @@ namespace Rfid.Persistence.Domain
         /// </summary>
         public BaseBsonDocument()
         {
-            AddedAtUtc = DateTime.UtcNow;
+            UnixTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             BsonObjectId = ObjectId.GenerateNewId();
         }
 
@@ -28,9 +28,9 @@ namespace Rfid.Persistence.Domain
 
 
         /// <summary>
-        /// The <see cref="BsonDateTime"/> of when the <see cref="Document"/> was added to the collection.
+        /// The <see cref="UnixTime"/> of when the <see cref="Document"/> was added to the collection.
         /// </summary>
-        [BsonElement("AddedAtUtc")]
-        public DateTime AddedAtUtc { get; }
+        [BsonElement("UnixTime")]
+        public long UnixTime { get; set; }
     }
 }

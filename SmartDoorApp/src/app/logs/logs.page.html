@@ -22,7 +22,7 @@
   </ion-list>
   <ion-list>
     <ion-item *ngFor="let log of logs;" [attr.color]="getColor(log.attemptType)">
-      <ion-label>{{log.addedAtUtc | date:'yyyy/MM/dd HH:mm:ss':'+0200'}} - {{attemptType[log.attemptType]}}
+      <ion-label>{{log.unixTime * 1000 | date:'yyyy/MM/dd HH:mm:ss Z':'+0100'}} - {{attemptType[log.attemptType]}}
       </ion-label>
     </ion-item>
   </ion-list>

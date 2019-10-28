@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Rfid.Persistence.Domain.Collections;
 using RfidApi.Core.Services;
+using Rfid.Persistence.UnitOfWorks;
 
 namespace RfidApi.Controllers
 {
@@ -11,10 +12,12 @@ namespace RfidApi.Controllers
     public class LogController : ControllerBase
     {
         private readonly ILogService _logService;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public LogController(ILogService logService)
+        public LogController(ILogService logService, IUnitOfWork unitOfWork)
         {
             _logService = logService;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet("failed")]
@@ -57,6 +60,18 @@ namespace RfidApi.Controllers
         public async Task<Log> GetLatestLog()
         {
             return await _logService.GetLatestLog();
+        }
+
+        [HttpGet("unixtest")]
+        public async Task PostNewLog() 
+        {
+            await _unitOfWork.Logs.AddAsync(new Log
+            {
+                Uid = null,
+                AttemptType = 0,
+                Message = "UNIX TEST"
+            }).ConfigureAwait(false);
+
         }
     }
 }
