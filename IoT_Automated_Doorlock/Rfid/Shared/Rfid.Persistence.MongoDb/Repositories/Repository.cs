@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using MongoDB.Bson;
@@ -19,6 +20,11 @@ namespace Rfid.Persistence.MongoDb.Repositories
         protected Repository(MongoContext context, string collectionName)
         {
             _mongoCollection = context.GetCollection<T>(collectionName);
+        }
+
+        public List<T> GetLastDocuments(int count)
+        {
+            return _mongoCollection.AsQueryable().OrderByDescending(x => x.UnixTime).Take(count).ToList();
         }
 
         /// <inheritdoc />

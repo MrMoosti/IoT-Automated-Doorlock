@@ -57,9 +57,10 @@ namespace RfidApi.Core.Services.Implementations
             return _unitOfWork.Logs.WhereAsync(x => x.AttemptType == AttemptType.Success);
         }
 
-        public Task<Log> GetLatestLog()
+        public Log GetLatestLog()
         {
-            return _unitOfWork.Logs.FindAsync(x => true);
+            var logs = _unitOfWork.Logs.GetLastDocuments(1);
+            return logs[0];
         }
     }
 }

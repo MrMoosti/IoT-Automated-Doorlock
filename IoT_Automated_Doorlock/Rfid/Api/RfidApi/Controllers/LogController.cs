@@ -57,9 +57,9 @@ namespace RfidApi.Controllers
         }
 
         [HttpGet("latest")]
-        public async Task<Log> GetLatestLog()
+        public Log GetLatestLog()
         {
-            return await _logService.GetLatestLog();
+            return _logService.GetLatestLog();
         }
 
         [HttpGet("unixtest")]

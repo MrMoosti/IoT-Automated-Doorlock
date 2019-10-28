@@ -18,6 +18,6 @@ namespace RfidApi.Core.Services
 
         Task<IEnumerable<Log>> GetAllLogsFromToday();
 
-        Task<Log> GetLatestLog();
+        Log GetLatestLog();
     }
 }

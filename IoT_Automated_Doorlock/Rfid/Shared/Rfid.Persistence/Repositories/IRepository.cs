@@ -98,5 +98,7 @@ namespace Rfid.Persistence.Repositories
         /// <param name="newValue">The value that will be set to the <paramref name="predicateNew"/> value.</param>
         /// <returns></returns>
         Task UpdateValue(Expression<Func<T, object>> predicateSearch, object searchValue, Expression<Func<T, object>> predicateNew, object newValue);
+
+        List<T> GetLastDocuments(int count);
     }
 }

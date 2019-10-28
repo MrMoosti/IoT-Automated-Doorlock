@@ -39,7 +39,6 @@ export class DoorStatePage implements OnInit {
 
     this.logService.getLatestLog().subscribe((data: Log) => {
       this.log = data;
-      console.log(data);
     })
   }
 
