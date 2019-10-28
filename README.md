@@ -150,7 +150,6 @@ Functional without any relay or electric door
 ## Authors
 
 - [M.E. Yilmaz](https://www.meyilmaz.com)
--
 
 ## License
 
