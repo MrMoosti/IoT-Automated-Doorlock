@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MongoDB.Bson;
 using Rfid.Persistence.Domain.Collections;
 using Rfid.Persistence.Domain.Enums;
 using Rfid.Persistence.UnitOfWorks;
@@ -61,6 +62,13 @@ namespace RfidApi.Core.Services.Implementations
         {
             var logs = _unitOfWork.Logs.GetLastDocuments(1);
             return logs[0];
+        }
+
+        public Task<Log> GetLogById(string id)
+        {
+            ObjectId objectId = ObjectId.Parse(id);
+            var foundLog = _unitOfWork.Logs.FindAsync(x => x.BsonObjectId == objectId);
+            return foundLog;
         }
     }
 }

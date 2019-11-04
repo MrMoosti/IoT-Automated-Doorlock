@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using Rfid.Persistence.Domain.Enums;
 
 namespace Rfid.Persistence.Domain.Collections
@@ -12,7 +13,6 @@ namespace Rfid.Persistence.Domain.Collections
         /// </summary>
         [BsonElement("Uid")]
         public byte[] Uid { get; set; }
-
 
         /// <summary>
         /// The <see cref="AttemptType"/> of this <see cref="Log"/>

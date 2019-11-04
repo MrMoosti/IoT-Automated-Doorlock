@@ -4,20 +4,27 @@ using System.Collections.Generic;
 using Rfid.Persistence.Domain.Collections;
 using RfidApi.Core.Services;
 using Rfid.Persistence.UnitOfWorks;
+using MongoDB.Bson;
 
 namespace RfidApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LogController : ControllerBase
+    public class LogsController : ControllerBase
     {
         private readonly ILogService _logService;
         private readonly IUnitOfWork _unitOfWork;
 
-        public LogController(ILogService logService, IUnitOfWork unitOfWork)
+        public LogsController(ILogService logService, IUnitOfWork unitOfWork)
         {
             _logService = logService;
             _unitOfWork = unitOfWork;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<Log> GetLogById(string id)
+        {
+            return await _logService.GetLogById(id);
         }
 
         [HttpGet("failed")]
@@ -26,7 +33,7 @@ namespace RfidApi.Controllers
             return _logService.GetAllFailedLogs();
         }
 
-        [HttpGet("all")]
+        [HttpGet]
         public Task<IEnumerable<Log>> GetAllLogs()
         {
             return _logService.GetAllLogs();
@@ -62,7 +69,7 @@ namespace RfidApi.Controllers
             return _logService.GetLatestLog();
         }
 
-        [HttpGet("unixtest")]
+        [HttpGet("test")]
         public async Task PostNewLog() 
         {
             await _unitOfWork.Logs.AddAsync(new Log

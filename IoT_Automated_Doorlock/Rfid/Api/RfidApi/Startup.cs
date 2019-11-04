@@ -9,6 +9,7 @@ using Rfid.Persistence.MongoDb.Repositories;
 using Rfid.Persistence.MongoDb.UnitOfWorks;
 using Rfid.Persistence.Repositories;
 using Rfid.Persistence.UnitOfWorks;
+using RfidApi.Core.Led;
 using RfidApi.Core.Services;
 using RfidApi.Core.Services.Implementations;
 
@@ -35,6 +36,7 @@ namespace RfidApi
             services.AddScoped<IDoorRepository, DoorRepository>();
             services.AddScoped<ILogRepository, LogRepository>();
             services.AddScoped<MongoContext>();
+            services.AddSingleton<BlinkLed>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
