@@ -7,9 +7,6 @@ namespace RfidScanner.Helpers
     public static class ContinueHelper
     {
 
-        /// <summary>
-        /// Aks to continue.
-        /// </summary>
         public static void AskToContinue()
         {
             Terminal.WriteLine("Press Esc key to continue . . .");

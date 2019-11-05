@@ -10,8 +10,14 @@ namespace RfidApi.Core.Services.Implementations
         public Temperature GetCpuTemp()
         {
             var temperature = new CpuTemperature();
-            if (temperature.IsAvailable) return temperature.Temperature;
-            throw new CpuTempNotAvailableException("Error: CPU Temperature not available!");
+            if (temperature.IsAvailable)
+            {
+                return temperature.Temperature;
+            }
+            else
+            {
+                throw new CpuTempNotAvailableException("Error: CPU Temperature not available!");
+            }
         }
     }
 }

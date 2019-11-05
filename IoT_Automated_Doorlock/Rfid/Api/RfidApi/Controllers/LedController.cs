@@ -20,11 +20,5 @@ namespace RfidApi.Controllers
         {
             _blinkLed.Initialize();
         }
-
-        [HttpGet]
-        public string Get()
-        {
-            return "Test";
-        }
     }
 }

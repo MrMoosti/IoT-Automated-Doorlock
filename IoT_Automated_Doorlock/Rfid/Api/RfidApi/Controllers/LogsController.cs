@@ -78,7 +78,6 @@ namespace RfidApi.Controllers
                 AttemptType = 0,
                 Message = "UNIX TEST"
             }).ConfigureAwait(false);
-
         }
     }
 }
