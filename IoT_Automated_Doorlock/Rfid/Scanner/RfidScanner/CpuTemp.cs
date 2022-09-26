@@ -1,31 +1,28 @@
-using RfidScanner.Services;
 using System;
 using System.Threading.Tasks;
+using RfidScanner.Services;
 using Swan.Logging;
 
-namespace RfidScanner
+namespace RfidScanner;
+
+public class CpuTemp
 {
+    private readonly CpuService _cpuService;
 
-    public class CpuTemp
+    public CpuTemp(CpuService cpuService)
     {
-        private readonly CpuService _cpuService;
+        _cpuService = cpuService;
+    }
 
-        public CpuTemp(CpuService cpuService)
-        {
-            _cpuService = cpuService;
+    public Task Initialize()
+    {
+        Console.Clear();
+        return Run();
+    }
 
-        }
-
-        public Task Initialize()
-        {
-            Console.Clear();
-            return Run();
-        }
-
-        private Task Run()
-        {
-            "Reading CPU Temprature...".Info();
-            return _cpuService.SaveCpuTemperature();
-        }
+    private Task Run()
+    {
+        "Reading CPU Temprature...".Info();
+        return _cpuService.SaveCpuTemperature();
     }
 }

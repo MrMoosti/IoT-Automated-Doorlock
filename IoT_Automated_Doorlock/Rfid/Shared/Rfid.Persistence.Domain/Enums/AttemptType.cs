@@ -1,10 +1,9 @@
-﻿namespace Rfid.Persistence.Domain.Enums
+﻿namespace Rfid.Persistence.Domain.Enums;
+
+public enum AttemptType
 {
-    public enum AttemptType
-    {
-        Success,
-        Fail,
-        UnkownUid,
-        Error
-    }
+    Success,
+    Fail,
+    UnkownUid,
+    Error
 }

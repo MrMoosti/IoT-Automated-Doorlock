@@ -1,8 +1,7 @@
-﻿namespace Rfid.Persistence.Domain.Enums
+﻿namespace Rfid.Persistence.Domain.Enums;
+
+public enum DoorStatus
 {
-    public enum DoorStatus
-    {
-        Open,
-        Closed
-    }
+    Open,
+    Closed
 }

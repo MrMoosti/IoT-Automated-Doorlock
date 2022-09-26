@@ -2,24 +2,23 @@
 using System.Threading.Tasks;
 using Rfid.Persistence.Domain.Collections;
 
-namespace RfidApi.Core.Services
+namespace RfidApi.Core.Services;
+
+public interface ILogService
 {
-    public interface ILogService
-    {
-        Task<IEnumerable<Log>> GetAllLogs();
+    Task<IEnumerable<Log>> GetAllLogs();
 
-        Task<IEnumerable<Log>> GetAllFailedLogs();
+    Task<IEnumerable<Log>> GetAllFailedLogs();
 
-        Task<IEnumerable<Log>> GetAllSucceededLogs();
+    Task<IEnumerable<Log>> GetAllSucceededLogs();
 
-        Task<IEnumerable<Log>> GetAllLogsFromThisMonth();
+    Task<IEnumerable<Log>> GetAllLogsFromThisMonth();
 
-        Task<IEnumerable<Log>> GetAllLogsFromThisWeek();
+    Task<IEnumerable<Log>> GetAllLogsFromThisWeek();
 
-        Task<IEnumerable<Log>> GetAllLogsFromToday();
+    Task<IEnumerable<Log>> GetAllLogsFromToday();
 
-        Log GetLatestLog();
+    Log GetLatestLog();
 
-        Task<Log> GetLogById(string id);
-    }
+    Task<Log> GetLogById(string id);
 }

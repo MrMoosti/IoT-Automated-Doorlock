@@ -1,37 +1,32 @@
-﻿
-using System.IO;
+﻿using System.IO;
 using Newtonsoft.Json;
 
-namespace Rfid.Persistence.MongoDb
+namespace Rfid.Persistence.MongoDb;
+
+/// <summary>
+///     Loads the db connection string from the <see cref="ConfigFile" />.
+/// </summary>
+public class DatabaseConfig
 {
+    private const string ConfigFolder = "Configs";
+    private const string ConfigFile = "DatabaseConfig.json";
 
-    /// <summary>
-    /// Loads the db connection string from the <see cref="ConfigFile"/>.
-    /// </summary>
-    public class DatabaseConfig
+    public static DbConfigModel Data;
+
+    static DatabaseConfig()
     {
-        private const string ConfigFolder = "Configs";
-        private const string ConfigFile = "DatabaseConfig.json";
+        if (!Directory.Exists(ConfigFolder)) Directory.CreateDirectory(ConfigFolder);
 
-        public static DbConfigModel Data;
-
-        static DatabaseConfig()
+        if (!File.Exists(ConfigFolder + "/" + ConfigFile))
         {
-
-            if (!Directory.Exists(ConfigFolder)) Directory.CreateDirectory(ConfigFolder);
-
-            if (!File.Exists(ConfigFolder + "/" + ConfigFile))
-            {
-                Data = new DbConfigModel();
-                var json = JsonConvert.SerializeObject(Data, Formatting.Indented);
-                File.WriteAllText(ConfigFolder + "/" + ConfigFile, json);
-            }
-            else
-            {
-                var json = File.ReadAllText(ConfigFolder + "/" + ConfigFile);
-                Data = JsonConvert.DeserializeObject<DbConfigModel>(json);
-            }
+            Data = new DbConfigModel();
+            var json = JsonConvert.SerializeObject(Data, Formatting.Indented);
+            File.WriteAllText(ConfigFolder + "/" + ConfigFile, json);
+        }
+        else
+        {
+            var json = File.ReadAllText(ConfigFolder + "/" + ConfigFile);
+            Data = JsonConvert.DeserializeObject<DbConfigModel>(json);
         }
     }
 }
-

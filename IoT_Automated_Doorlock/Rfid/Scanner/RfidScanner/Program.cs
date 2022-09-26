@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Threading.Tasks;
-using Swan;
 using Unosquare.RaspberryIO;
 using Unosquare.WiringPi;
 
@@ -11,16 +8,14 @@ using Unosquare.WiringPi;
 [assembly: AssemblyTitle("RfidScanner")]
 [assembly: AssemblyVersion("1.0.*")]
 
-namespace RfidScanner
+namespace RfidScanner;
+
+internal class Program
 {
-    internal class Program
+    private static async Task Main()
     {
-        private static async Task Main()
-        {
-            Unity.RegisterTypes();
-            Pi.Init<BootstrapWiringPi>();
-            await Unity.Resolve<Scanner>().Initialize().ConfigureAwait(false);
-        }
+        Unity.RegisterTypes();
+        Pi.Init<BootstrapWiringPi>();
+        await Unity.Resolve<Scanner>().Initialize().ConfigureAwait(false);
     }
 }
-

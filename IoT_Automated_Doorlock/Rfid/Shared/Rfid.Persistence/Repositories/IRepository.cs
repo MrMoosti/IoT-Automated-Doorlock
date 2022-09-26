@@ -5,100 +5,93 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace Rfid.Persistence.Repositories
+namespace Rfid.Persistence.Repositories;
+
+/// <summary>
+///     This is a generic Repository that should be used in all table/collection specific Repositories.
+/// </summary>
+/// <typeparam name="T">The object type of the table/collection</typeparam>
+public interface IRepository<T> where T : class
 {
+    /// <summary>
+    ///     Get all rows/documents for the table/collection.
+    /// </summary>
+    /// <returns>
+    ///     A task that represents the asynchronous get operation.
+    ///     The task result contains the requested <list type="T"></list>"/>.
+    /// </returns>
+    Task<List<T>> GetAllAsync();
 
     /// <summary>
-    /// This is a generic Repository that should be used in all table/collection specific Repositories.
+    ///     Find a rows/documents in the table/collection.
     /// </summary>
-    /// <typeparam name="T">The object type of the table/collection</typeparam>
-    public interface IRepository<T> where T : class
-    {
+    /// <param name="predicate">The <see cref="Expression" /> that will be used to look for the row/document.</param>
+    /// <returns>
+    ///     A task that represents the asynchronous find operation.
+    ///     The task result contains the requested <see cref="T" />.
+    /// </returns>
+    Task<T> FindAsync(Expression<Func<T, bool>> predicate);
 
-        /// <summary>
-        /// Get all rows/documents for the table/collection.
-        /// </summary>
-        /// <returns>
-        /// A task that represents the asynchronous get operation.
-        /// The task result contains the requested <list type="T"></list>"/>.
-        /// </returns>
-        Task<List<T>> GetAllAsync();
+    /// <summary>
+    ///     Get a list of objects where the <paramref name="predicate" /> is true.
+    /// </summary>
+    /// <param name="predicate">The <see cref="Expression" /> that will be used to look for the row/document.</param>
+    /// <returns>
+    ///     A task that represents the asynchronous where operation.
+    ///     The task result contains the requested <list type="T"></list>.
+    /// </returns>
+    Task<IEnumerable<T>> WhereAsync(Expression<Func<T, bool>> predicate);
 
+    /// <summary>
+    ///     Add a row/document to the table/collection.
+    /// </summary>
+    /// <param name="document">The row/document that will be added to the table/collection.</param>
+    /// <returns>
+    ///     A task that represents the asynchronous add operation.
+    /// </returns>
+    Task AddAsync(T document);
 
-        /// <summary>
-        /// Find a rows/documents in the table/collection.
-        /// </summary>
-        /// <param name="predicate">The <see cref="Expression"/> that will be used to look for the row/document.</param>
-        /// <returns>
-        /// A task that represents the asynchronous find operation.
-        /// The task result contains the requested <see cref="T"/>.
-        /// </returns>
-        Task<T> FindAsync(Expression<Func<T, bool>> predicate);
+    /// <summary>
+    ///     Add a range of rows/documents to the table/collection.
+    /// </summary>
+    /// <param name="documents">The <list type="T"></list> that will be added to the table/collection.</param>
+    /// <returns>
+    ///     A task that represents the asynchronous add operation.
+    /// </returns>
+    Task AddRangeAsync(IEnumerable<T> documents);
 
+    /// <summary>
+    ///     Remove a row/document from the table/collection.
+    /// </summary>
+    /// <param name="objectId">The <see cref="ObjectId" /> of the object you want to remove.</param>
+    /// <returns>
+    ///     A task that represents the asynchronous delete operation.
+    ///     The task result contains the <see cref="DeleteResult" /> of the delete operation.
+    /// </returns>
+    Task<DeleteResult> RemoveAsync(ObjectId objectId);
 
-        /// <summary>
-        /// Get a list of objects where the <paramref name="predicate"/> is true.
-        /// </summary>
-        /// <param name="predicate">The <see cref="Expression"/> that will be used to look for the row/document.</param>
-        /// <returns>
-        /// A task that represents the asynchronous where operation.
-        /// The task result contains the requested <list type="T"></list>.
-        /// </returns>
-        Task<IEnumerable<T>> WhereAsync(Expression<Func<T, bool>> predicate);
+    /// <summary>
+    ///     Remove a range of rows/documents from the table/collection.
+    /// </summary>
+    /// <param name="objectIds">The list of <see cref="ObjectId" />s of the objects you want to remove.</param>
+    /// <returns>
+    ///     A task that represents the asynchronous delete operation.
+    ///     The task result contains the <see cref="DeleteResult" /> of the delete operation.
+    /// </returns>
+    Task<DeleteResult> RemoveRangeAsync(List<ObjectId> objectIds);
 
+    /// <summary>
+    ///     Update a value of a row/document in a table/collection.
+    /// </summary>
+    /// <param name="predicateSearch">The <see cref="Expression" /> that will be used to look for the row/document.</param>
+    /// <param name="searchValue">The value that should match the <paramref name="predicateSearch" /> value.</param>
+    /// <param name="predicateNew">
+    ///     The <see cref="Expression" /> that will select which variable of the row/document will be
+    ///     updated.
+    /// </param>
+    /// <param name="newValue">The value that will be set to the <paramref name="predicateNew" /> value.</param>
+    /// <returns></returns>
+    Task UpdateValue(Expression<Func<T, object>> predicateSearch, object searchValue, Expression<Func<T, object>> predicateNew, object newValue);
 
-        /// <summary>
-        /// Add a row/document to the table/collection.
-        /// </summary>
-        /// <param name="document">The row/document that will be added to the table/collection.</param>
-        /// <returns>
-        /// A task that represents the asynchronous add operation.
-        /// </returns>
-        Task AddAsync(T document);
-
-
-        /// <summary>
-        /// Add a range of rows/documents to the table/collection.
-        /// </summary>
-        /// <param name="documents">The <list type="T"></list> that will be added to the table/collection.</param>
-        /// <returns>
-        /// A task that represents the asynchronous add operation.
-        /// </returns>
-        Task AddRangeAsync(IEnumerable<T> documents);
-
-
-        /// <summary>
-        /// Remove a row/document from the table/collection.
-        /// </summary>
-        /// <param name="objectId">The <see cref="ObjectId"/> of the object you want to remove.</param>
-        /// <returns>
-        /// A task that represents the asynchronous delete operation.
-        /// The task result contains the <see cref="DeleteResult"/> of the delete operation.
-        /// </returns>
-        Task<DeleteResult> RemoveAsync(ObjectId objectId);
-
-
-        /// <summary>
-        /// Remove a range of rows/documents from the table/collection.
-        /// </summary>
-        /// <param name="objectIds">The list of <see cref="ObjectId"/>s of the objects you want to remove.</param>
-        /// <returns>
-        /// A task that represents the asynchronous delete operation.
-        /// The task result contains the <see cref="DeleteResult"/> of the delete operation.
-        /// </returns>
-        Task<DeleteResult> RemoveRangeAsync(List<ObjectId> objectIds);
-
-
-        /// <summary>
-        /// Update a value of a row/document in a table/collection.
-        /// </summary>
-        /// <param name="predicateSearch">The <see cref="Expression"/> that will be used to look for the row/document.</param>
-        /// <param name="searchValue">The value that should match the <paramref name="predicateSearch"/> value.</param>
-        /// <param name="predicateNew">The <see cref="Expression"/> that will select which variable of the row/document will be updated.</param>
-        /// <param name="newValue">The value that will be set to the <paramref name="predicateNew"/> value.</param>
-        /// <returns></returns>
-        Task UpdateValue(Expression<Func<T, object>> predicateSearch, object searchValue, Expression<Func<T, object>> predicateNew, object newValue);
-
-        List<T> GetLastDocuments(int count);
-    }
+    List<T> GetLastDocuments(int count);
 }

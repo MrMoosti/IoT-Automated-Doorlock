@@ -1,10 +1,8 @@
 using Iot.Units;
 
-namespace RfidApi.Core.Services
-{
+namespace RfidApi.Core.Services;
 
-    public interface ICpuTempService
-    {
-        Temperature GetCpuTemp();
-    }
+public interface ICpuTempService
+{
+    Temperature GetCpuTemp();
 }

@@ -1,13 +1,11 @@
-﻿namespace Rfid.Persistence.MongoDb
+﻿namespace Rfid.Persistence.MongoDb;
+
+public struct DbConfigModel
 {
+    public string ConnectionString { get; }
 
-    public struct DbConfigModel
+    public DbConfigModel(string connectionString)
     {
-        public string ConnectionString { get; private set; }
-
-        public DbConfigModel(string connectionString)
-        {
-            ConnectionString = connectionString;
-        }
+        ConnectionString = connectionString;
     }
 }

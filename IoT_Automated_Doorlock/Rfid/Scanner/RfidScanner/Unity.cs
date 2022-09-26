@@ -7,58 +7,56 @@ using Rfid.Persistence.UnitOfWorks;
 using Unity;
 using Unity.Lifetime;
 
-namespace RfidScanner
+namespace RfidScanner;
+
+public static class Unity
 {
-    public static class Unity
+    private static UnityContainer container;
+
+    private static UnityContainer Container
     {
-        private static UnityContainer container;
-
-        private static UnityContainer Container
+        get
         {
-            get
-            {
-                //Register all types if none are register.
-                if (container == null)
-                    RegisterTypes();
-                return container;
-            }
+            //Register all types if none are register.
+            if (container == null)
+                RegisterTypes();
+            return container;
         }
+    }
+
+    /// <summary>
+    ///     Resolve a objects that is registered in the <see cref="container" />.
+    /// </summary>
+    /// <typeparam name="T">The object you want to resolve</typeparam>
+    /// <returns>The resolved object.</returns>
+    public static T Resolve<T>()
+    {
+        return (T)Container.Resolve(typeof(T));
+    }
+
+    /// <summary>
+    ///     Registers objects to the <see cref="container" />
+    /// </summary>
+    public static void RegisterTypes()
+    {
+        container = new UnityContainer();
+
+        container.RegisterType<ILogger, Logger>(new PerResolveLifetimeManager());
+        //container.RegisterSingleton<RfidMenu>();
+        container.RegisterSingleton<Scanner>();
+        container.RegisterSingleton<CpuTemp>();
 
 
-        /// <summary>
-        /// Resolve a objects that is registered in the <see cref="container"/>.
-        /// </summary>
-        /// <typeparam name="T">The object you want to resolve</typeparam>
-        /// <returns>The resolved object.</returns>
-        public static T Resolve<T>()
-        {
-            return (T)Container.Resolve(typeof(T));
-        }
+        //DI for the persistence database.
 
+        #region Persistence
 
-        /// <summary>
-        /// Registers objects to the <see cref="container"/>
-        /// </summary>
-        public static void RegisterTypes()
-        {
-            container = new UnityContainer();
+        container.RegisterSingleton<MongoContext>();
+        container.RegisterType<IUnitOfWork, UnitOfWork>(new PerResolveLifetimeManager());
+        container.RegisterType<ILogRepository, LogRepository>(new PerResolveLifetimeManager());
+        container.RegisterType<IDoorRepository, DoorRepository>(new PerResolveLifetimeManager());
+        container.RegisterType<ICpuRepository, CpuRepository>(new PerResolveLifetimeManager());
 
-            container.RegisterType<ILogger, Logger>(new PerResolveLifetimeManager());
-            //container.RegisterSingleton<RfidMenu>();
-            container.RegisterSingleton<Scanner>();
-            container.RegisterSingleton<CpuTemp>();
-
-
-            //DI for the persistence database.
-            #region Persistence
-
-            container.RegisterSingleton<MongoContext>();
-            container.RegisterType<IUnitOfWork, UnitOfWork>(new PerResolveLifetimeManager());
-            container.RegisterType<ILogRepository, LogRepository>(new PerResolveLifetimeManager());
-            container.RegisterType<IDoorRepository, DoorRepository>(new PerResolveLifetimeManager());
-            container.RegisterType<ICpuRepository, CpuRepository>(new PerResolveLifetimeManager());
-
-            #endregion
-        }
+        #endregion
     }
 }

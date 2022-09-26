@@ -1,10 +1,9 @@
-namespace Rfid.Persistence.Domain.Enums
+namespace Rfid.Persistence.Domain.Enums;
+
+public enum CpuState
 {
-    public enum CpuState
-    {
-        Hot,
-        Cold,
-        Ok,
-        Critical
-    }
+    Hot,
+    Cold,
+    Ok,
+    Critical
 }
