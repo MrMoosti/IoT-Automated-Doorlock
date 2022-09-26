@@ -1,22 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Iot.Device.Bindings" Version="1.0.0" />
-    <PackageReference Include="Unosquare.Raspberry.IO" Version="0.27.0" />
-    <PackageReference Include="Unosquare.WiringPi" Version="0.5.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Iot.Device.Bindings" Version="1.0.0"/>
+        <PackageReference Include="Unosquare.Raspberry.IO" Version="0.27.0"/>
+        <PackageReference Include="Unosquare.WiringPi" Version="0.5.0"/>
+    </ItemGroup>
 
-  <ItemGroup>
-  <ProjectReference Include="..\..\Scanner\RfidScanner\RfidScanner.csproj" />
-    <ProjectReference Include="..\..\Shared\Rfid.Persistence.Domain\Rfid.Persistence.Domain.csproj" />
-    <ProjectReference Include="..\..\Shared\Rfid.Persistence.MongoDb\Rfid.Persistence.MongoDb.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\Scanner\RfidScanner\RfidScanner.csproj"/>
+        <ProjectReference Include="..\..\Shared\Rfid.Persistence.Domain\Rfid.Persistence.Domain.csproj"/>
+        <ProjectReference Include="..\..\Shared\Rfid.Persistence.MongoDb\Rfid.Persistence.MongoDb.csproj"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="Services\DoorDto.cs" />
-  </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="Services\DoorDto.cs"/>
+    </ItemGroup>
 </Project>

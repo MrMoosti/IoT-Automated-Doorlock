@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="MongoDB.Bson" Version="2.9.2" />
-    <PackageReference Include="MongoDB.Driver" Version="2.9.2" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="MongoDB.Bson" Version="2.9.2"/>
+        <PackageReference Include="MongoDB.Driver" Version="2.9.2"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Rfid.Persistence.Domain\Rfid.Persistence.Domain.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Rfid.Persistence.Domain\Rfid.Persistence.Domain.csproj"/>
+    </ItemGroup>
 
 </Project>
